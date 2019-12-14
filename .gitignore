@@ -16,6 +16,7 @@
 *.userprefs
 *.pidb
 *.booproj
+.vs/
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -28,3 +29,4 @@ sysinfo.txt
 /UnityVS.tolua.CSharp.csproj
 /UnityVS.tolua.CSharp.Editor.csproj
 /UnityVS.tolua.sln
+.vs/L3/v15/Server/sqlite3/storage.ide-wal
