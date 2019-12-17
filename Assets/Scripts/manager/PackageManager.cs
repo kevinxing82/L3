@@ -65,7 +65,7 @@ public class PackageManager : MonoBehaviour
         
         //download assetbunlde
         installer.transform.Find("hint").GetComponent<Text>().text = "开始下载资源文件";
-        externalStorge = AppConst.ExternalStoragePrefix;
+        externalStorge = GameConst.ExternalStoragePrefix;
         yield return null;
         if (downloadQueue.Count > 0)
         {
@@ -119,7 +119,7 @@ public class PackageManager : MonoBehaviour
             diffStep++;
 
             string fileName = kv.Key;
-            string externalFileUrl = Path.Combine(AppConst.ExternalStoragePrefix, fileName);
+            string externalFileUrl = Path.Combine(GameConst.ExternalStoragePrefix, fileName);
 
             diffMD5Timer += Time.deltaTime;
             if (diffMD5Timer >= 1)
@@ -251,7 +251,7 @@ public class PackageManager : MonoBehaviour
         else
         {
             var local = externalStorge + "/";
-            var remote = AppConst.WebServer + "/";
+            var remote = GameConst.WebServer + "/";
             HttpDownloader downloader = new HttpDownloader(remote, local, fileName, null, FilesCnfgDownloadCompleted);
         }
     }
@@ -271,7 +271,7 @@ public class PackageManager : MonoBehaviour
         else
         {
             var local = externalStorge + "/";
-            var remote = AppConst.WebServer + "/";
+            var remote = GameConst.WebServer + "/";
             HttpDownloader downloader = new HttpDownloader(remote, local, fileName, null, DLCCnfgDownloadCompleted);
         }
     }
@@ -343,7 +343,7 @@ public class PackageManager : MonoBehaviour
             if(downloadQueue.Count>0)
             {
                 string name = downloadQueue.Dequeue();
-                string url = AppConst.WebServer + "/ABWorld/";
+                string url = GameConst.WebServer + "/ABWorld/";
                 string local = externalStorge + "/";
                 HttpDownloader loader = new HttpDownloader(url, local, name, NewPackageDownloadProgressCallback, NewPackageDownloadComplete);
             }

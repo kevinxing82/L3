@@ -1,6 +1,11 @@
 --主入口函数。从这里开始lua逻辑
+require("base.class")
+require("component.extend.init")
+
 function Main()					
-	print("logic start")	 		
+	print("This is where the world begin!")
+	World  = require("TheWorld")
+	World.run()		
 end
 
 --场景切换通知
@@ -10,4 +15,5 @@ function OnLevelWasLoaded(level)
 end
 
 function OnApplicationQuit()
+
 end

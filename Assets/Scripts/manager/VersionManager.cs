@@ -190,7 +190,7 @@ public class VersionManager : MonoBehaviour
 
     private void ClearExternalStorage()
     {
-        string[] files = Directory.GetFiles(AppConst.ExternalStoragePrefix);
+        string[] files = Directory.GetFiles(GameConst.ExternalStoragePrefix);
         foreach (var file in files)
         {
             File.Delete(file);
@@ -199,7 +199,7 @@ public class VersionManager : MonoBehaviour
 
     private void ClearDownloadingFiles()
     {
-        string[] files = Directory.GetFiles(AppConst.ExternalStoragePrefix, "*.downloading");
+        string[] files = Directory.GetFiles(GameConst.ExternalStoragePrefix, "*.downloading");
         foreach(var file in files)
         {
             File.Delete(file);
@@ -209,7 +209,7 @@ public class VersionManager : MonoBehaviour
     private void OnPackageUpdateComplete()
     {
         //write remote version to local
-        File.WriteAllText(AppConst.ExternalStoragePrefix + "/" + versionFileName, remoteVersion.version);
+        File.WriteAllText(GameConst.ExternalStoragePrefix + "/" + versionFileName, remoteVersion.version);
 
         StartCoroutine(EndCheckVersion());
     }
@@ -234,7 +234,7 @@ public class VersionManager : MonoBehaviour
     IEnumerator ReadRemoteVersion(Action<string> loadCallback)
     {
         string txtContent = string.Empty;
-        externalStorage = AppConst.ExternalStoragePrefix;
+        externalStorage = GameConst.ExternalStoragePrefix;
         yield return StartCoroutine(VersionFileDownload(delegate (string txt)
         {
             txtContent = txt;
@@ -281,7 +281,7 @@ public class VersionManager : MonoBehaviour
 
     IEnumerator ReadTextFileInternalStorage(string fileName, Action<string> callback)
     {
-        string path =Path.Combine(AppConst.InternalStoragePrefix,fileName);
+        string path =Path.Combine(GameConst.InternalStoragePrefix,fileName);
 
 #if UNITY_ANDROID && !UNITY_EDITOR
         UnityWebRequest www = UnityWebRequest.Get(path);
@@ -295,7 +295,7 @@ public class VersionManager : MonoBehaviour
 
     string ReadTextFileExtenralStorage(string fileName)
     {
-        string path = Path.Combine(AppConst.ExternalStoragePrefix, fileName);
+        string path = Path.Combine(GameConst.ExternalStoragePrefix, fileName);
         if(File.Exists(path))
         {
             return File.ReadAllText(path);
@@ -352,7 +352,7 @@ public class VersionManager : MonoBehaviour
         else
         {
             var local = externalStorage + "/";
-            var remote = AppConst.WebServer + "/";
+            var remote = GameConst.WebServer + "/";
             HttpDownloader downloader = new HttpDownloader(remote, local, fileName, null, VersionFileDownloadCompleted);
         }
     }

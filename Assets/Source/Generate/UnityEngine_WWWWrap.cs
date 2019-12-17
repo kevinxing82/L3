@@ -47,18 +47,18 @@ public class UnityEngine_WWWWrap
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
-			else if (count == 2 && TypeChecker.CheckTypes<byte[]>(L, 2))
-			{
-				string arg0 = ToLua.CheckString(L, 1);
-				byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
-				UnityEngine.WWW obj = new UnityEngine.WWW(arg0, arg1);
-				ToLua.PushObject(L, obj);
-				return 1;
-			}
 			else if (count == 2 && TypeChecker.CheckTypes<UnityEngine.WWWForm>(L, 2))
 			{
 				string arg0 = ToLua.CheckString(L, 1);
 				UnityEngine.WWWForm arg1 = (UnityEngine.WWWForm)ToLua.ToObject(L, 2);
+				UnityEngine.WWW obj = new UnityEngine.WWW(arg0, arg1);
+				ToLua.PushObject(L, obj);
+				return 1;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes<byte[]>(L, 2))
+			{
+				string arg0 = ToLua.CheckString(L, 1);
+				byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
 				UnityEngine.WWW obj = new UnityEngine.WWW(arg0, arg1);
 				ToLua.PushObject(L, obj);
 				return 1;
@@ -164,18 +164,18 @@ public class UnityEngine_WWWWrap
 				ToLua.PushObject(L, o);
 				return 1;
 			}
-			else if (count == 2 && TypeChecker.CheckTypes<UnityEngine.CachedAssetBundle>(L, 2))
-			{
-				string arg0 = ToLua.CheckString(L, 1);
-				UnityEngine.CachedAssetBundle arg1 = StackTraits<UnityEngine.CachedAssetBundle>.To(L, 2);
-				UnityEngine.WWW o = UnityEngine.WWW.LoadFromCacheOrDownload(arg0, arg1);
-				ToLua.PushObject(L, o);
-				return 1;
-			}
 			else if (count == 2 && TypeChecker.CheckTypes<UnityEngine.Hash128>(L, 2))
 			{
 				string arg0 = ToLua.CheckString(L, 1);
 				UnityEngine.Hash128 arg1 = StackTraits<UnityEngine.Hash128>.To(L, 2);
+				UnityEngine.WWW o = UnityEngine.WWW.LoadFromCacheOrDownload(arg0, arg1);
+				ToLua.PushObject(L, o);
+				return 1;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes<UnityEngine.CachedAssetBundle>(L, 2))
+			{
+				string arg0 = ToLua.CheckString(L, 1);
+				UnityEngine.CachedAssetBundle arg1 = StackTraits<UnityEngine.CachedAssetBundle>.To(L, 2);
 				UnityEngine.WWW o = UnityEngine.WWW.LoadFromCacheOrDownload(arg0, arg1);
 				ToLua.PushObject(L, o);
 				return 1;
@@ -189,19 +189,19 @@ public class UnityEngine_WWWWrap
 				ToLua.PushObject(L, o);
 				return 1;
 			}
-			else if (count == 3 && TypeChecker.CheckTypes<UnityEngine.CachedAssetBundle, uint>(L, 2))
+			else if (count == 3 && TypeChecker.CheckTypes<UnityEngine.Hash128, uint>(L, 2))
 			{
 				string arg0 = ToLua.CheckString(L, 1);
-				UnityEngine.CachedAssetBundle arg1 = StackTraits<UnityEngine.CachedAssetBundle>.To(L, 2);
+				UnityEngine.Hash128 arg1 = StackTraits<UnityEngine.Hash128>.To(L, 2);
 				uint arg2 = (uint)LuaDLL.lua_tonumber(L, 3);
 				UnityEngine.WWW o = UnityEngine.WWW.LoadFromCacheOrDownload(arg0, arg1, arg2);
 				ToLua.PushObject(L, o);
 				return 1;
 			}
-			else if (count == 3 && TypeChecker.CheckTypes<UnityEngine.Hash128, uint>(L, 2))
+			else if (count == 3 && TypeChecker.CheckTypes<UnityEngine.CachedAssetBundle, uint>(L, 2))
 			{
 				string arg0 = ToLua.CheckString(L, 1);
-				UnityEngine.Hash128 arg1 = StackTraits<UnityEngine.Hash128>.To(L, 2);
+				UnityEngine.CachedAssetBundle arg1 = StackTraits<UnityEngine.CachedAssetBundle>.To(L, 2);
 				uint arg2 = (uint)LuaDLL.lua_tonumber(L, 3);
 				UnityEngine.WWW o = UnityEngine.WWW.LoadFromCacheOrDownload(arg0, arg1, arg2);
 				ToLua.PushObject(L, o);

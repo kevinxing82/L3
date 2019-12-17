@@ -150,6 +150,11 @@ public static class CustomSettings
         _GT(typeof(RenderTexture)),
         _GT(typeof(Resources)),     
         _GT(typeof(LuaProfiler)),
+
+        _GT(typeof(SpriteRenderer)),
+        _GT(typeof(Sprite)),
+        _GT(typeof(Rect)),
+        _GT(typeof(LuaBehaviour)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

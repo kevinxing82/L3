@@ -72,6 +72,16 @@ public class MainManager : MonoBehaviour
     {
         SocketManager.destroy();
     }
+    private void OnApplicationQuit()
+    {
+        OnDestroy();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.UnloadUnusedAssetsImmediate(true);
+#endif
+        Application.Unload();
+        System.GC.Collect();
+    }
 
     // Update is called once per frame
     void Update()

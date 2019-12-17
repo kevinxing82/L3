@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class AppConst
+public class GameConst
 {
     public static string WebServer
     {
