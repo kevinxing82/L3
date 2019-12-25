@@ -2,6 +2,11 @@ class(...)
 
 local BuildMap = require("scene.BuildMap")
 local GameObject = UnityEngine.GameObject
+local HumanObject = require("scene.obj.HumanObject")
+
+function ctor(self)
+
+end
 
 function createObject(self)
 	local go  = GameObject.create("GameScene")
@@ -17,9 +22,26 @@ function init(self,mapId,mapFile,event,callback)
 end
 
 function addPlayer(self)
-	local player  = GameObject.create("Player")
-	player:setParent(self.gameObject.transform)
+	-- self.player  = GameObject.create("Player")
+	-- self.player:setParent(self.gameObject.transform)
+	self.player = HumanObject.new()
 	local camera = GameObject.Find("Camera")
-	camera:setParent(player.transform)
-	player:setRotate(0,0,0)
+	camera:setParent(self.player.gameObject.transform)
 end
+
+function add(self,sceneObj)
+
+end
+
+function del(self,sceneObj)
+
+end
+
+function onFixedUpdate(self)
+
+end
+
+function onUpdate(self)
+	self.player:onUpdate()
+end
+

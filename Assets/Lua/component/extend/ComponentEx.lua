@@ -76,7 +76,7 @@ function base.addComponent(self,comName)
 end
 
 function base.getComponent(self,comName)
-	self:GetComponent(CLASS_NAMES[comName])
+	return self:GetComponent(CLASS_NAMES[comName])
 end
 
 function base.addChild(self,child)

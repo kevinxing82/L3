@@ -10,9 +10,9 @@ public static class LuaBinder
 		float t = Time.realtimeSinceStartup;
 		L.BeginModule(null);
 		LuaInterface_DebuggerWrap.Register(L);
-		RendererWrap.Register(L);
 		LuaProfilerWrap.Register(L);
 		LuaBehaviourWrap.Register(L);
+		MainManagerWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);
 		LuaInterface_InjectTypeWrap.Register(L);
@@ -35,6 +35,7 @@ public static class LuaBinder
 		UnityEngine_TextureWrap.Register(L);
 		UnityEngine_Texture2DWrap.Register(L);
 		UnityEngine_ShaderWrap.Register(L);
+		UnityEngine_RendererWrap.Register(L);
 		UnityEngine_WWWWrap.Register(L);
 		UnityEngine_ScreenWrap.Register(L);
 		UnityEngine_CameraClearFlagsWrap.Register(L);
@@ -56,11 +57,14 @@ public static class LuaBinder
 		UnityEngine_QualitySettingsWrap.Register(L);
 		UnityEngine_RenderSettingsWrap.Register(L);
 		UnityEngine_ResourcesWrap.Register(L);
+		UnityEngine_SpriteRendererWrap.Register(L);
+		UnityEngine_SpriteWrap.Register(L);
+		UnityEngine_RectWrap.Register(L);
+		UnityEngine_ResourceRequestWrap.Register(L);
 		UnityEngine_AudioBehaviourWrap.Register(L);
-		UnityEngine_RendererWrap.Register(L);
-        UnityEngine_SpriteRendererWrap.Register(L);
-        UnityEngine_SpriteWrap.Register(L);
-        UnityEngine_RectWrap.Register(L);
+		L.BeginModule("U2D");
+		UnityEngine_U2D_SpriteAtlasWrap.Register(L);
+		L.EndModule();
 		L.BeginModule("Events");
 		L.RegFunction("UnityAction", UnityEngine_Events_UnityAction);
 		L.RegFunction("UnityAction_LuaInterface_LuaTable", UnityEngine_Events_UnityAction_LuaInterface_LuaTable);

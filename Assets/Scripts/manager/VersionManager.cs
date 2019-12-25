@@ -70,8 +70,8 @@ public class FileHash
 }
 public class VersionManager : MonoBehaviour
 {
-    public bool useABResource;
-    public bool useABLua;
+    public static bool useABResource;
+    public static bool useABLua;
 
     GameObject installer;
 

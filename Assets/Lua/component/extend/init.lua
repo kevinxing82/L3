@@ -1,6 +1,6 @@
 CLASS_NAMES = {}
 
-local namespace = {_G.UnityEngine,UnityEngine.UI,UnityEngine.EventSystems}
+local namespace = {_G,UnityEngine,UnityEngine.UI,UnityEngine.EventSystems}
 local internalTime = os.time()
 for _,list in ipairs(namespace) do
 	for k,v in pairs(list) do

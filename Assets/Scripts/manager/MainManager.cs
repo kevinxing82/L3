@@ -4,9 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public delegate void VoidCallback();
+public delegate void ObjectCallback(Object obj);
 public class MainManager : MonoBehaviour
 {
     private VersionManager version;
+    private PackageManager package;
+
+    private VoidCallback onFixedUpdate;
+    private VoidCallback onUpdate;
     void Awake()
     {
         Init();
@@ -39,10 +44,12 @@ public class MainManager : MonoBehaviour
 
     IEnumerator RunOnNextFrame()
     {
+        version = gameObject.AddComponent<VersionManager>();
+        version.completeCallback = CheckVersionCallback;
+        package = gameObject.gameObject.AddComponent<PackageManager>();
+
         yield return new WaitForEndOfFrame();
 
-        version = gameObject.GetComponent<VersionManager>();
-        version.completeCallback = CheckVersionCallback;
         version.StartCheckVersion();
     }
 
@@ -58,9 +65,26 @@ public class MainManager : MonoBehaviour
         SocketManager.init();
     }
 
+    public void OnFixedUpdateCallback(LuaInterface.LuaFunction callback)
+    {
+        onFixedUpdate = () =>
+        {
+            callback.Call();
+        };
+    }
+
+    public  void OnUpdateCallback(LuaInterface.LuaFunction callback)
+    {
+        onUpdate = () =>
+          {
+              callback.Call();
+          };
+    }
+
     void FixedUpdate()
     {
         SocketManager.update();
+        onFixedUpdate?.Invoke();
     }
 
     void onExternalInterface(string jsonStr)
@@ -86,6 +110,6 @@ public class MainManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        onUpdate?.Invoke();
     }
 }
