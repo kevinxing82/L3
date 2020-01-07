@@ -7,6 +7,9 @@ using UnityEditor;
 using BindType = ToLuaMenu.BindType;
 using System.Reflection;
 using UnityEngine.U2D;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public static class CustomSettings
 {
@@ -159,6 +162,15 @@ public static class CustomSettings
         _GT(typeof(MainManager)),
         _GT(typeof(ResourceRequest)),
         _GT(typeof(SpriteAtlas)),
+        _GT(typeof(EventSystem)),
+        _GT(typeof(TouchPhase)),
+        _GT(typeof(RectTransform)),
+        _GT(typeof(RectTransform.Edge)),
+        _GT(typeof(ETCJoystick)),
+        _GT(typeof(UnityEvent)),
+        _GT(typeof(UnityEvent<Vector2>)),
+        _GT(typeof(Image)),
+        _GT(typeof(Button)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

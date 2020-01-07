@@ -15,7 +15,7 @@ SpriteAtlas:
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
-      filterMode: 1
+      filterMode: 2
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
@@ -35,7 +35,7 @@ SpriteAtlas:
     bindAsDefault: 0
     storedHash:
       serializedVersion: 2
-      Hash: cb7144cb20005505e2ef4177d3b04b12
+      Hash: 9c6f3bb0cd688a8719c70377e1cd14fa
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: a70cb010c224a41419e767238a0a581c, type: 3}

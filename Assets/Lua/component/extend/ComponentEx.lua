@@ -76,11 +76,14 @@ function base.addComponent(self,comName)
 end
 
 function base.getComponent(self,comName)
+	-- for k,v in pairs(CLASS_NAMES) do
+	-- 	print(k,v)
+	-- end
 	return self:GetComponent(CLASS_NAMES[comName])
 end
 
 function base.addChild(self,child)
-	self:addChildAt(getComponent(child),self.transform.childCount)
+	self:addChildAt(getTransform(child),self.transform.childCount)
 end
 
 function base.addChildAt(self,child,index)

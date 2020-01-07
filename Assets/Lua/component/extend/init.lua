@@ -22,5 +22,6 @@ for _,list in ipairs(namespace) do
 	end
 end
 
+
 require("component.extend.ComponentEx")
 require("component.extend.GameObjectEx")

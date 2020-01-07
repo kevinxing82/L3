@@ -2,46 +2,44 @@ class(...)
 
 local BuildMap = require("scene.BuildMap")
 local GameObject = UnityEngine.GameObject
-local HumanObject = require("scene.obj.HumanObject")
+local HumanVessel = require("scene.vessel.HumanVessel")
+local Human  = require("soul.Human")
+local Time = UnityEngine.Time
 
 function ctor(self)
-
+	self:createObject()
+	self.accumilatedTime = 0 
+	self.frame = 0
+	self.vesselList = {}
 end
 
 function createObject(self)
 	local go  = GameObject.create("GameScene")
 	self.gameObject = go
 	go.transform.parent = nil
-	return self
 end
 
 function init(self,mapId,mapFile,event,callback)
 	print("GameScene Init")
+	self.isInited = true
 	coroutine.start(BuildMap.init,self,mapFile,function() print("BuildMap End")end)
 	print("GameScene Init End")
 end
 
-function addPlayer(self)
-	-- self.player  = GameObject.create("Player")
-	-- self.player:setParent(self.gameObject.transform)
-	self.player = HumanObject.new()
-	local camera = GameObject.Find("Camera")
-	camera:setParent(self.player.gameObject.transform)
+function add(self,vessel)
+	table.insert(self.vesselList,vessel)
 end
 
-function add(self,sceneObj)
+function del(self,vessel)
 
 end
 
-function del(self,sceneObj)
-
+function onRenderFrameUpdate(self)
+	if not self.isInited then
+		return
+	end
+	
+	for k,v in pairs(self.vesselList) do
+		v:onUpdate()
+	end
 end
-
-function onFixedUpdate(self)
-
-end
-
-function onUpdate(self)
-	self.player:onUpdate()
-end
-
