@@ -705,6 +705,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 117.3
       objectReference: {fileID: 0}
+    - target: {fileID: 114899054705862486, guid: 8002d778f41fa564e97ca9c237fe7c85,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114547288066006808, guid: 8002d778f41fa564e97ca9c237fe7c85,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114772045155116590, guid: 8002d778f41fa564e97ca9c237fe7c85,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8002d778f41fa564e97ca9c237fe7c85, type: 3}
 --- !u!1001 &1922477701

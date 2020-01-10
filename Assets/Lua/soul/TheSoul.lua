@@ -196,7 +196,7 @@ end
 function isSingleShotAction(self,action)
 	if action == ACTION.ATTACK then
 		return true
-	elseif action == ACTION.ATTACK_READY then
+	elseif action == ACTION.CAST_SKILL then
 		return true
 	else
 		return false

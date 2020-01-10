@@ -16,6 +16,7 @@ local ACTION_TIME={
 	[3] = 0.4,
 	[4] = 0.3,
 	[5] = 0.3,
+	[10] = 0.2,
 }
 local WAY_TO_RESWAY = {
 	[0] = 0,
@@ -34,28 +35,101 @@ function ctor(self,soul)
 	self.gameObject:setParent(GameObject.Find("GameScene").transform)
 	self.gameObject:setRotate(0,0,0)
 
-    self.bodyObj = GameObject.create("Body")
-	self.bodyRenderer = self.bodyObj:addComponent("SpriteRenderer")
-	self.bodyObj:setParent(self.gameObject.transform)
-	self.bodyObj:setScale(1,1,1)
-
-	self.weaponObj = GameObject.create("Weapon")
-	self.weaponRenderer = self.weaponObj:addComponent("SpriteRenderer")
-	self.weaponObj:setParent(self.gameObject.transform)
-	self.weaponObj:setScale(1,1,1)
-
-	self.bodyAtlas =  Resources.Load("SpriteAtlas/Model/Hero/10002",typeof(UnityEngine.U2D.SpriteAtlas))
-	self.bodyRenderer.sprite = self.bodyAtlas:GetSprite("1_0_0")
-	self.cnfg = require("frames.model.hero.10002")
-	self.bodyFrameCnfg = {}
-
-	for k,v in pairs(self.cnfg) do
-		for k1,v1 in pairs(v.frames) do
-			self.bodyFrameCnfg[k1] = v1
-		end
-	end
+    self.bodyObj,self.bodyRenderer,self.bodyFrameCnfg,self.bodyAtlas= self:addBody(10002)
+    self.weaponObj,self.weaponRenderer,self.weaponFramesCnfg,self.weaponAtlas= self:addWeapon(40011)
+    self.wingObj,self.wingRenderer,self.wingFrameCnfg,self.wingAtlas = self:addWing(30003)
+    self.hatObj,self.hatRenderer,self.hatFrameCnfg,self.hatAtlas = self:addHat(60001)
 
 	self.lastAction = nil
+end
+
+function addBody(self,id)
+	local obj = GameObject.create("Body")
+	local renderer = obj:addComponent("SpriteRenderer")
+	renderer.sortingLayerName="SceneObject"
+	obj:setParent(self.gameObject.transform)
+	obj:setScale(1,1,1)
+
+	local atlas =  Resources.Load("SpriteAtlas/Model/Hero/"..id,typeof(UnityEngine.U2D.SpriteAtlas))
+	renderer.sprite = atlas:GetSprite("1_0_0")
+	local cnfg = require("frames.model.hero."..id)
+	local frameCnfg = {}
+
+	for k,v in pairs(cnfg) do
+		for k1,v1 in pairs(v.frames) do
+			frameCnfg[k1] = v1
+		end
+	end
+	return obj,renderer,frameCnfg,atlas
+end
+
+function addWeapon(self,id)
+	local obj = GameObject.create("Weapon")
+	local renderer = obj:addComponent("SpriteRenderer")
+	renderer.sortingLayerName="SceneObject"
+	obj:setParent(self.gameObject.transform)
+	obj:setScale(1,1,1)
+
+    local atlas = Resources.Load("SpriteAtlas/Model/Weapon/"..id,typeof(UnityEngine.U2D.SpriteAtlas))
+	renderer.sprite = atlas:GetSprite("1_0_0")
+	renderer:setParent(self.gameObject.transform)
+	obj:setScale(1,1,1)
+
+	local cnfg = require("frames.model.weapon."..id)
+	local frameCnfg = {}
+
+	for k,v in pairs(cnfg) do
+		for k1,v1 in pairs(v.frames) do
+			frameCnfg[k1] = v1
+		end
+	end
+	return obj,renderer,frameCnfg,atlas
+end
+
+function addHat(self,id)
+	local obj = GameObject.create("Hat")
+	local renderer = obj:addComponent("SpriteRenderer")
+	renderer.sortingLayerName="SceneObject"
+	obj:setParent(self.gameObject.transform)
+	obj:setScale(1,1,1)
+
+    local atlas = Resources.Load("SpriteAtlas/Model/Hat/"..id,typeof(UnityEngine.U2D.SpriteAtlas))
+	renderer.sprite = atlas:GetSprite("1_0_0")
+	renderer:setParent(self.gameObject.transform)
+	obj:setScale(1,1,1)
+
+	local cnfg = require("frames.model.hat."..id)
+	local frameCnfg = {}
+
+	for k,v in pairs(cnfg) do
+		for k1,v1 in pairs(v.frames) do
+			frameCnfg[k1] = v1
+		end
+	end
+	return obj,renderer,frameCnfg,atlas
+end
+
+function addWing(self,id)
+	local obj = GameObject.create("Wing")
+	local renderer = obj:addComponent("SpriteRenderer")
+	renderer.sortingLayerName="SceneObject"
+	obj:setParent(self.gameObject.transform)
+	obj:setScale(1,1,1)
+
+    local atlas = Resources.Load("SpriteAtlas/Model/Wing/"..id,typeof(UnityEngine.U2D.SpriteAtlas))
+	renderer.sprite = atlas:GetSprite("1_0_0")
+	renderer:setParent(self.gameObject.transform)
+	obj:setScale(1,1,1)
+
+	local cnfg = require("frames.model.wing."..id)
+	local frameCnfg = {}
+
+	for k,v in pairs(cnfg) do
+		for k1,v1 in pairs(v.frames) do
+			frameCnfg[k1] = v1
+		end
+	end
+	return obj,renderer,frameCnfg,atlas
 end
 
 function onUpdate(self)
@@ -83,23 +157,97 @@ function onUpdate(self)
 		index   =math.floor(timeSpan*TimerLine.RenderFrameRate*actionTime%actionTotalFrame)
 	end
 
-	local key = string.format("%s_%s_%s",action,WAY_TO_RESWAY[way],index)
+    local key 
+    if action == ACTION.ATTACK_READY then
+    	key = string.format("%s_%s_%s",ACTION.ATTACK,WAY_TO_RESWAY[way],0)
+    else
+    	key = string.format("%s_%s_%s",action,WAY_TO_RESWAY[way],index)
+    end
+
+	self:drawBody(key,way)
+	self:drawWeapon(key,way)
+	self:drawWing(key,way)
+	self:drawHat(key,way)
+
+	if way > 2 and way<6 then
+		self.wingRenderer.sortingOrder = 1
+		self.bodyRenderer.sortingOrder = 2
+		self.weaponRenderer.sortingOrder =  4
+		self.hatRenderer.sortingOrder = 3
+	else
+		self.weaponRenderer.sortingOrder = 1
+		self.bodyRenderer.sortingOrder = 2
+		self.wingRenderer.sortingOrder = 3
+		self.hatRenderer.sortingOrder =  4
+	end
+
+	self.gameObject:setPos(self.soul.y,self.soul.x)
+end
+
+function drawBody(self,key,way)
 	local cnfg = self.bodyFrameCnfg[key..".png"]
     local offsetX  = (cnfg.sourceSize.w/2-cnfg.spriteSourceSize.x)
 	local offsetY  = (cnfg.sourceSize.h/2-cnfg.spriteSourceSize.y)
 	if way>4 then
 		self.bodyObj:setScale(-1,1,0)
+		self.weaponObj:setScale(-1,1,0)
 	else
 		self.bodyObj:setScale(1,1,0)
+		self.weaponObj:setScale(1,1,0)
 		offsetX = -offsetX
 	    offsetY = offsetY
 	end
 
 	self.bodyRenderer.sprite = self.bodyAtlas:GetSprite(key)
 	self.bodyRenderer:setPos(offsetX,offsetY,0)
+end
 
-	self.gameObject:setPos(self.soul.y,self.soul.x)
-	
+function drawWeapon(self,key,way)
+	local cnfg = self.weaponFramesCnfg[key..".png"]
+	local offsetX  = (cnfg.sourceSize.w/2-cnfg.spriteSourceSize.x)
+	local offsetY  = (cnfg.sourceSize.h/2-cnfg.spriteSourceSize.y)
+	if way>4 then
+		self.weaponObj:setScale(-1,1,0)
+	else
+		self.weaponObj:setScale(1,1,0)
+		offsetX = -offsetX
+		offsetY = offsetY
+	end
+
+	self.weaponRenderer.sprite = self.weaponAtlas:GetSprite(key)
+	self.weaponRenderer:setPos(offsetX,offsetY,0)
+end	
+
+function drawWing(self,key,way)
+	local cnfg = self.wingFrameCnfg[key..".png"]
+	local offsetX  = (cnfg.sourceSize.w/2-cnfg.spriteSourceSize.x)
+	local offsetY  = (cnfg.sourceSize.h/2-cnfg.spriteSourceSize.y)
+	if way>4 then
+		self.wingObj:setScale(-1,1,0)
+	else
+		self.wingObj:setScale(1,1,0)
+		offsetX = -offsetX
+		offsetY = offsetY
+	end
+
+	self.wingRenderer.sprite = self.wingAtlas:GetSprite(key)
+	self.wingRenderer:setPos(offsetX,offsetY,0)
+end
+
+function drawHat(self,key,way)
+	local cnfg = self.hatFrameCnfg[key..".png"]
+	local offsetX  = (cnfg.sourceSize.w/2-cnfg.spriteSourceSize.x)
+	local offsetY  = (cnfg.sourceSize.h/2-cnfg.spriteSourceSize.y)
+	if way>4 then
+		self.hatObj:setScale(-1,1,0)
+	else
+		self.hatObj:setScale(1,1,0)
+		offsetX = -offsetX
+		offsetY = offsetY
+	end
+
+	self.hatRenderer.sprite = self.hatAtlas:GetSprite(key)
+	self.hatRenderer:setPos(offsetX,offsetY,0)
 end
 
 function getType(self)

@@ -47,9 +47,13 @@ function initWorld()
 	input = GameInput.new()
 	joystick = Joystick.new()
 	joystick:init()
-	joystick:AddListener(Event.ON_JOYSTICK_BASE_ATK,onJoystickAtkClick)
-	joystick:AddListener(Event.ON_JOYSTICK_MOVE,onJoystickChange)
-	joystick:AddListener(Event.ON_JOYSTICK_MOVE_END,onJoyStickEndDrag)
+	joystick:AddListener(EVENT.ON_JOYSTICK_BASE_ATK,onJoystickAtkClick)
+	joystick:AddListener(EVENT.ON_JOYSTICK_MOVE,onJoystickChange)
+	joystick:AddListener(EVENT.ON_JOYSTICK_MOVE_END,onJoyStickEndDrag)
+	joystick:AddListener(EVENT.ON_JOYSTICK_SKILL_1,onJoyStickSkill1)
+	joystick:AddListener(EVENT.ON_JOYSTICK_SKILL_2,onJoyStickSkill2)
+	joystick:AddListener(EVENT.ON_JOYSTICK_SKILL_3,onJoyStickSkill3)
+	joystick:AddListener(EVENT.ON_JOYSTICK_SKILL_4,onJoyStickSkill4)
 
 	isReady = true
 end
@@ -64,6 +68,22 @@ end
 
 function onJoyStickEndDrag()
 	input.joystickStop()
+end
+
+function onJoyStickSkill1()
+	print("Use Skill1")
+end
+
+function onJoyStickSkill2()
+	print("Use Skill2")
+end
+
+function onJoyStickSkill3()
+	print("Use Skill3")
+end
+
+function onJoyStickSkill4()
+	print("Use Skill4")
 end
 
 function addObj(soul)
